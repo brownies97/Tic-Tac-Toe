@@ -210,12 +210,16 @@ def choosePlayer():
 
 #determine player input location
 def input_placement(current_player):
-    #print("Next Player Turn:")
-    input_row = str(input("Please choose where you want to mark: top, middle, or bottom: \n"))
+    
+    input_row = str(input("Please choose which row you want to mark: top, middle, or bottom: \n"))
     input_column = str(input("Please choose which column to want to mark: left, middle, or right: \n"))
+
+    if (input_row not in ['top','middle', 'bottom']) or (input_column not in ['left','middle','right']):
+        print('You did not enter a valid choice, please try again: ')
+        return False, False
+
     os.system("cls")
     return input_row, input_column
-    updateBoard(current_player,input_row.lower(),input_column.lower())
 
 
 #runs the actual game
@@ -224,10 +228,16 @@ p = choosePlayer()
 while checkBoard(p) is False:
     if player1_turn is False:
         row, column = input_placement(player2)
-        updateBoard(player2,row, column)
+        if row is False or column is False:
+            continue
+        else:
+            updateBoard(player2,row, column)
     else:
         row, column = input_placement(player1)
-        updateBoard(player1,row, column)
+        if row is False or column is False:
+            continue
+        else:
+            updateBoard(player1,row, column)
     
     
 
